@@ -641,12 +641,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">المادة:</label>
                                     <select class="form-select" id="subject">
-                                        <option value="chemistry">كيمياء - عبدالله محمد حمدي</option>
-                                        <option value="math">رياضيات - عبدالعزيز عايض القحطاني</option>
-                                        <option value="biology">أحياء - عبدالرحمن عبدالله الغامدي</option>
-                                        <option value="english">انجليزي - فهد ابراهيم المحبوب</option>
-                                        <option value="language">الكفايات اللغوية - محمد أحمد العميري</option>
-                                        <option value="technology">التقنية الرقمية - فارس سعيد الغامدي</option>
+                                        <option value="">اختر المادة</option>
                                     </select>
                                 </div>
                             </div>
@@ -709,10 +704,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">المادة:</label>
                                     <select class="form-select" id="group-subject">
-                                        <option value="earth-science">علوم الأرض والفضاء</option>
-                                        <option value="chemistry">كيمياء</option>
-                                        <option value="math">رياضيات</option>
-                                        <option value="biology">أحياء</option>
+                                        <option value="">اختر المادة</option>
                                     </select>
                                 </div>
                             </div>
@@ -729,7 +721,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">المعلم المسؤول:</label>
-                                    <input type="text" class="form-control" id="group-teacher" value="عبدالله محمد حمدي" readonly>
+                                    <input type="text" class="form-control" id="group-teacher" readonly>
                                 </div>
                             </div>
                         </div>
@@ -849,19 +841,277 @@
             </div>
         </div>
 
-        <!-- صفحات أخرى (طلاب، معلمين، تقارير) -->
-        <!-- ... سيتم الحفاظ على الصفحات الأخرى كما هي مع بعض التعديلات الطفيفة ... -->
-        
+        <!-- صفحة قائمة الطلاب -->
+        <div id="students-list" class="page-section">
+            <div class="card">
+                <div class="card-header">
+                    قائمة الطلاب الكاملة
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="student-table">
+                            <thead>
+                                <tr>
+                                    <th>اسم الطالب</th>
+                                    <th>التفاعل الصفي (قبل)</th>
+                                    <th>المشاركة الفاعلة (قبل)</th>
+                                    <th>العمل بجد (قبل)</th>
+                                    <th>النوم (قبل)</th>
+                                    <th>قطع سير الحصة (قبل)</th>
+                                    <th>عدم تفاعل (قبل)</th>
+                                    <th>التفاعل الصفي (بعد)</th>
+                                    <th>المشاركة الفاعلة (بعد)</th>
+                                    <th>العمل بجد (بعد)</th>
+                                    <th>النوم (بعد)</th>
+                                    <th>قطع سير الحصة (بعد)</th>
+                                    <th>عدم تفاعل (بعد)</th>
+                                    <th>التحسن</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-table">
+                                <!-- سيتم ملء البيانات بواسطة JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة المعلمين -->
+        <div id="teachers" class="page-section">
+            <div class="card">
+                <div class="card-header">
+                    قائمة المعلمين والمواد
+                </div>
+                <div class="card-body">
+                    <div class="teachers-list" id="teachers-list">
+                        <!-- سيتم ملء البيانات بواسطة JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة التقارير -->
+        <div id="reports" class="page-section">
+            <div class="card">
+                <div class="card-header">
+                    تقارير أولياء الأمور
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-success text-white">
+                                    تقرير الطلاب المتميزين
+                                </div>
+                                <div class="card-body">
+                                    <p>يمكنك إنشاء تقارير مفصلة عن أداء الطلاب المتميزين وإرسالها لأولياء الأمور عبر ClassDojo.</p>
+                                    <button class="btn btn-success" id="generate-excellence-report">إنشاء تقرير المتميزين</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-warning text-white">
+                                    تقرير الطلاب المتعثرين
+                                </div>
+                                <div class="card-body">
+                                    <p>يمكنك إنشاء تقارير مفصلة عن أداء الطلاب المتعثرين وإرسالها لأولياء الأمور عبر ClassDojo.</p>
+                                    <button class="btn btn-warning" id="generate-struggling-report">إنشاء تقرير المتعثرين</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            تقرير شامل عن مبادرة هُمام
+                        </div>
+                        <div class="card-body">
+                            <p>تقرير شامل يوضح تأثير مبادرة هُمام على أداء الطلاب وسلوكهم.</p>
+                            <button class="btn btn-primary" id="generate-comprehensive-report">إنشاء التقرير الشامل</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- الأكواد الأخرى (مودالات، فوتر، إلخ) -->
-    <!-- ... سيتم الحفاظ على الأكواد الأخرى مع بعض التعديلات الطفيفة ... -->
+    <!-- الفوتر -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>نظام هُمام - همزة الوصل بين الأسرة والمدرسة</h5>
+                    <p>مبادرة رقمية تهدف إلى رفع التحصيل الدراسي وتعزيز السلوك الإيجابي</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>تواصل معنا: <a href="mailto:info@humam.edu" class="text-white">info@humam.edu</a></p>
+                    <p>هاتف: ٠١١ ٢٣٤ ٥٦٧٨</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p class="mb-0">جميع الحقوق محفوظة &copy; 2023 نظام هُمام</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // بيانات الطلاب من ملف Excel المرفق
-        let students = [
-            // ... البيانات السابقة ...
+        const studentsData = [
+            {
+                name: "ابراهيم بن عباس بن حسين اليامي",
+                before: { interaction: 6, participation: 2, hardWork: 2, sleep: 4, interruption: 5, nonInteraction: 6 },
+                after: { interaction: 11, participation: 11, hardWork: 11, sleep: 2, interruption: 0, nonInteraction: 11 }
+            },
+            {
+                name: "ذياب بن تركي بن سليم أبو ثرياء",
+                before: { interaction: 6, participation: 3, hardWork: 3, sleep: 5, interruption: 10, nonInteraction: 6 },
+                after: { interaction: 12, participation: 14, hardWork: 14, sleep: 2, interruption: 2, nonInteraction: 11 }
+            },
+            {
+                name: "عبدالله بن سالم بن جبر الخالدي",
+                before: { interaction: 5, participation: 4, hardWork: 3, sleep: 4, interruption: 12, nonInteraction: 5 },
+                after: { interaction: 12, participation: 15, hardWork: 11, sleep: 1, interruption: 2, nonInteraction: 10 }
+            },
+            {
+                name: "فارس بن فهد بن احمد ال صيدة",
+                before: { interaction: 6, participation: 5, hardWork: 2, sleep: 5, interruption: 5, nonInteraction: 4 },
+                after: { interaction: 10, participation: 14, hardWork: 14, sleep: 2, interruption: 0, nonInteraction: 10 }
+            },
+            {
+                name: "فهد بن تركي بن حمود الجبيري الشهري",
+                before: { interaction: 5, participation: 6, hardWork: 1, sleep: 4, interruption: 13, nonInteraction: 5 },
+                after: { interaction: 10, participation: 17, hardWork: 11, sleep: 1, interruption: 3, nonInteraction: 10 }
+            },
+            {
+                name: "مبارك بن حمد بن راشد الهاجري",
+                before: { interaction: 6, participation: 5, hardWork: 2, sleep: 5, interruption: 10, nonInteraction: 6 },
+                after: { interaction: 15, participation: 18, hardWork: 18, sleep: 2, interruption: 1, nonInteraction: 12 }
+            },
+            {
+                name: "مرزوق بن خالد ابن مرزوق السيف",
+                before: { interaction: 5, participation: 4, hardWork: 3, sleep: 12, interruption: 3, nonInteraction: 5 },
+                after: { interaction: 15, participation: 12, hardWork: 12, sleep: 4, interruption: 0, nonInteraction: 11 }
+            },
+            {
+                name: "برزان بن نايف بن دعسان الشمري",
+                before: { interaction: 4, participation: 1, hardWork: 3, sleep: 1, interruption: 5, nonInteraction: 4 },
+                after: { interaction: 11, participation: 13, hardWork: 14, sleep: 0, interruption: 0, nonInteraction: 12 }
+            },
+            {
+                name: "حمد بن سعد بن عبدالله الخالدي",
+                before: { interaction: 5, participation: 2, hardWork: 3, sleep: 2, interruption: 9, nonInteraction: 5 },
+                after: { interaction: 12, participation: 14, hardWork: 15, sleep: 0, interruption: 1, nonInteraction: 11 }
+            },
+            {
+                name: "سليمان بن عبدالله بن علي اليامي",
+                before: { interaction: 4, participation: 5, hardWork: 3, sleep: 3, interruption: 11, nonInteraction: 6 },
+                after: { interaction: 14, participation: 15, hardWork: 15, sleep: 0, interruption: 2, nonInteraction: 12 }
+            },
+            {
+                name: "عبدالعزيز بن علي بن عبدالله العماري",
+                before: { interaction: 2, participation: 5, hardWork: 4, sleep: 1, interruption: 8, nonInteraction: 5 },
+                after: { interaction: 12, participation: 15, hardWork: 16, sleep: 0, interruption: 0, nonInteraction: 11 }
+            },
+            {
+                name: "منيف بن خالد بن منيف الشهراني",
+                before: { interaction: 2, participation: 4, hardWork: 4, sleep: 2, interruption: 14, nonInteraction: 5 },
+                after: { interaction: 19, participation: 11, hardWork: 17, sleep: 0, interruption: 2, nonInteraction: 10 }
+            },
+            {
+                name: "أحمد بن علي بن دغيم السوقي الشمري",
+                before: { interaction: 4, participation: 1, hardWork: 3, sleep: 2, interruption: 14, nonInteraction: 4 },
+                after: { interaction: 11, participation: 10, hardWork: 15, sleep: 0, interruption: 2, nonInteraction: 10 }
+            },
+            {
+                name: "حمد بن عمر بن محمد العجلاني",
+                before: { interaction: 5, participation: 2, hardWork: 4, sleep: 2, interruption: 9, nonInteraction: 5 },
+                after: { interaction: 10, participation: 10, hardWork: 12, sleep: 0, interruption: 1, nonInteraction: 10 }
+            },
+            {
+                name: "راكان بن هادي بن مدلول الشمري",
+                before: { interaction: 2, participation: 1, hardWork: 3, sleep: 2, interruption: 8, nonInteraction: 6 },
+                after: { interaction: 9, participation: 14, hardWork: 14, sleep: 0, interruption: 1, nonInteraction: 12 }
+            },
+            {
+                name: "ضاري بن ناصر بن خليف الشمري",
+                before: { interaction: 4, participation: 2, hardWork: 4, sleep: 8, interruption: 9, nonInteraction: 5 },
+                after: { interaction: 8, participation: 15, hardWork: 15, sleep: 2, interruption: 1, nonInteraction: 11 }
+            },
+            {
+                name: "علي بن حامد بن علي الشبيبه الرويلي",
+                before: { interaction: 5, participation: 5, hardWork: 3, sleep: 2, interruption: 11, nonInteraction: 4 },
+                after: { interaction: 10, participation: 17, hardWork: 11, sleep: 0, interruption: 2, nonInteraction: 11 }
+            },
+            {
+                name: "تركي بن احمد بن حسين العلي",
+                before: { interaction: 4, participation: 4, hardWork: 4, sleep: 2, interruption: 3, nonInteraction: 8 },
+                after: { interaction: 8, participation: 18, hardWork: 11, sleep: 0, interruption: 0, nonInteraction: 11 }
+            },
+            {
+                name: "سامي بن سيف بن دوخي الاسلمي الشمري",
+                before: { interaction: 2, participation: 2, hardWork: 3, sleep: 5, interruption: 4, nonInteraction: 6 },
+                after: { interaction: 9, participation: 19, hardWork: 11, sleep: 1, interruption: 0, nonInteraction: 10 }
+            },
+            {
+                name: "نواف بن خليل بن ابراهيم الصعب",
+                before: { interaction: 1, participation: 1, hardWork: 4, sleep: 3, interruption: 10, nonInteraction: 5 },
+                after: { interaction: 14, participation: 14, hardWork: 14, sleep: 0, interruption: 3, nonInteraction: 12 }
+            },
+            {
+                name: "عبدالإله بن هادي بن مهدي آل فطيح",
+                before: { interaction: 2, participation: 2, hardWork: 3, sleep: 5, interruption: 12, nonInteraction: 2 },
+                after: { interaction: 10, participation: 15, hardWork: 15, sleep: 2, interruption: 3, nonInteraction: 12 }
+            },
+            {
+                name: "عبدالرحمن بن مناحي بن علي السهمي الشمراني",
+                before: { interaction: 5, participation: 2, hardWork: 4, sleep: 8, interruption: 14, nonInteraction: 5 },
+                after: { interaction: 10, participation: 12, hardWork: 11, sleep: 2, interruption: 3, nonInteraction: 10 }
+            },
+            {
+                name: "عبدالمحسن بن حمود بن فارع العتيبي",
+                before: { interaction: 4, participation: 2, hardWork: 3, sleep: 1, interruption: 11, nonInteraction: 6 },
+                after: { interaction: 9, participation: 13, hardWork: 11, sleep: 0, interruption: 3, nonInteraction: 12 }
+            },
+            {
+                name: "مشرف بن صفوق بن محسن الشمري",
+                before: { interaction: 5, participation: 2, hardWork: 2, sleep: 4, interruption: 8, nonInteraction: 5 },
+                after: { interaction: 9, participation: 11, hardWork: 12, sleep: 1, interruption: 0, nonInteraction: 12 }
+            },
+            {
+                name: "عايد بن عبدالله بن عايد الشمري",
+                before: { interaction: 6, participation: 2, hardWork: 5, sleep: 2, interruption: 7, nonInteraction: 5 },
+                after: { interaction: 10, participation: 11, hardWork: 12, sleep: 0, interruption: 2, nonInteraction: 12 }
+            },
+            {
+                name: "عبدالإله بن ابراهيم بن بخيت الزهراني",
+                before: { interaction: 5, participation: 4, hardWork: 3, sleep: 3, interruption: 8, nonInteraction: 5 },
+                after: { interaction: 12, participation: 12, hardWork: 12, sleep: 0, interruption: 1, nonInteraction: 11 }
+            },
+            {
+                name: "عبدالله بن خالد بن عايض العبيدي",
+                before: { interaction: 5, participation: 5, hardWork: 4, sleep: 9, interruption: 9, nonInteraction: 5 },
+                after: { interaction: 8, participation: 11, hardWork: 11, sleep: 4, interruption: 2, nonInteraction: 11 }
+            },
+            {
+                name: "مهند انس عبدالهادي ابولبده",
+                before: { interaction: 6, participation: 4, hardWork: 5, sleep: 3, interruption: 14, nonInteraction: 5 },
+                after: { interaction: 15, participation: 18, hardWork: 14, sleep: 0, interruption: 3, nonInteraction: 10 }
+            }
+        ];
+
+        // بيانات المعلمين من ملف Excel المرفق
+        const teachersData = [
+            { name: "عبدالله محمد حمدي", subject: "كيمياء" },
+            { name: "عبدالعزيز عايض القحطاني", subject: "رياضيات" },
+            { name: "عبدالرحمن عبدالله الغامدي", subject: "أحياء" },
+            { name: "فهد ابراهيم المحبوب", subject: "انجليزي" },
+            { name: "محمد أحمد العميري", subject: "الكفايات اللغوية" },
+            { name: "فارس سعيد الغامدي", subject: "التقنية الرقمية" }
         ];
 
         // بيانات الخطط العلاجية
@@ -903,12 +1153,313 @@
 
         // تهيئة النظام
         document.addEventListener('DOMContentLoaded', function() {
+            initializeSystem();
             initializeTreatmentPlansSystem();
-            // ... باقي التهيئات ...
+            initializeNavigation();
         });
+
+        // تهيئة النظام الرئيسي
+        function initializeSystem() {
+            // تحديث الإحصائيات
+            updateStatistics();
+            
+            // تحديث قوائم الطلاب والمعلمين
+            updateStudentsList();
+            updateTeachersList();
+            
+            // إنشاء الرسوم البيانية
+            createBehaviorChart();
+            createComparisonChart();
+            
+            // تحديث أفضل الطلاب متحسنين
+            updateTopImprovers();
+        }
+
+        // تحديث الإحصائيات
+        function updateStatistics() {
+            document.getElementById('total-students').textContent = studentsData.length;
+            
+            // حساب الطلاب بحاجة متابعة (الطلاب الذين لديهم تحسن أقل من 20%)
+            let needsFollowup = 0;
+            studentsData.forEach(student => {
+                const totalBefore = student.before.interaction + student.before.participation + student.before.hardWork;
+                const totalAfter = student.after.interaction + student.after.participation + student.after.hardWork;
+                const improvement = ((totalAfter - totalBefore) / totalBefore) * 100;
+                if (improvement < 20) needsFollowup++;
+            });
+            document.getElementById('needs-followup').textContent = needsFollowup;
+            
+            // مشاركة أولياء الأمور (افتراضي 78%)
+            document.getElementById('parent-participation').textContent = "78%";
+            
+            // متوسط التحسن
+            let totalImprovement = 0;
+            studentsData.forEach(student => {
+                const totalBefore = student.before.interaction + student.before.participation + student.before.hardWork;
+                const totalAfter = student.after.interaction + student.after.participation + student.after.hardWork;
+                const improvement = ((totalAfter - totalBefore) / totalBefore) * 100;
+                totalImprovement += improvement;
+            });
+            const avgImprovement = Math.round(totalImprovement / studentsData.length);
+            document.getElementById('avg-improvement').textContent = `${avgImprovement}%`;
+        }
+
+        // تحديث قائمة الطلاب
+        function updateStudentsList() {
+            const studentsTable = document.getElementById('students-table');
+            studentsTable.innerHTML = '';
+            
+            studentsData.forEach((student, index) => {
+                const totalBefore = student.before.interaction + student.before.participation + student.before.hardWork;
+                const totalAfter = student.after.interaction + student.after.participation + student.after.hardWork;
+                const improvement = ((totalAfter - totalBefore) / totalBefore) * 100;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.name}</td>
+                    <td>${student.before.interaction}</td>
+                    <td>${student.before.participation}</td>
+                    <td>${student.before.hardWork}</td>
+                    <td>${student.before.sleep}</td>
+                    <td>${student.before.interruption}</td>
+                    <td>${student.before.nonInteraction}</td>
+                    <td>${student.after.interaction}</td>
+                    <td>${student.after.participation}</td>
+                    <td>${student.after.hardWork}</td>
+                    <td>${student.after.sleep}</td>
+                    <td>${student.after.interruption}</td>
+                    <td>${student.after.nonInteraction}</td>
+                    <td class="${improvement > 0 ? 'improvement' : 'regression'}">${Math.round(improvement)}%</td>
+                `;
+                studentsTable.appendChild(row);
+            });
+        }
+
+        // تحديث قائمة المعلمين
+        function updateTeachersList() {
+            const teachersList = document.getElementById('teachers-list');
+            teachersList.innerHTML = '';
+            
+            teachersData.forEach(teacher => {
+                const teacherCard = document.createElement('div');
+                teacherCard.className = 'teacher-card';
+                teacherCard.innerHTML = `
+                    <h5>${teacher.name}</h5>
+                    <p class="mb-1"><strong>المادة:</strong> ${teacher.subject}</p>
+                    <p class="mb-0"><strong>عدد الطلاب:</strong> ${studentsData.length}</p>
+                `;
+                teachersList.appendChild(teacherCard);
+            });
+        }
+
+        // إنشاء رسم بياني لتوزيع السلوكيات
+        function createBehaviorChart() {
+            const ctx = document.getElementById('behaviorChart').getContext('2d');
+            
+            // حساب المتوسطات
+            let totalPositiveBefore = 0;
+            let totalNegativeBefore = 0;
+            let totalPositiveAfter = 0;
+            let totalNegativeAfter = 0;
+            
+            studentsData.forEach(student => {
+                totalPositiveBefore += student.before.interaction + student.before.participation + student.before.hardWork;
+                totalNegativeBefore += student.before.sleep + student.before.interruption + student.before.nonInteraction;
+                totalPositiveAfter += student.after.interaction + student.after.participation + student.after.hardWork;
+                totalNegativeAfter += student.after.sleep + student.after.interruption + student.after.nonInteraction;
+            });
+            
+            const avgPositiveBefore = Math.round(totalPositiveBefore / studentsData.length);
+            const avgNegativeBefore = Math.round(totalNegativeBefore / studentsData.length);
+            const avgPositiveAfter = Math.round(totalPositiveAfter / studentsData.length);
+            const avgNegativeAfter = Math.round(totalNegativeAfter / studentsData.length);
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['إيجابية قبل', 'سلبية قبل', 'إيجابية بعد', 'سلبية بعد'],
+                    datasets: [{
+                        label: 'متوسط السلوكيات',
+                        data: [avgPositiveBefore, avgNegativeBefore, avgPositiveAfter, avgNegativeAfter],
+                        backgroundColor: [
+                            'rgba(39, 174, 96, 0.7)',
+                            'rgba(231, 76, 60, 0.7)',
+                            'rgba(39, 174, 96, 0.9)',
+                            'rgba(231, 76, 60, 0.9)'
+                        ],
+                        borderColor: [
+                            'rgba(39, 174, 96, 1)',
+                            'rgba(231, 76, 60, 1)',
+                            'rgba(39, 174, 96, 1)',
+                            'rgba(231, 76, 60, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'متوسط النقاط'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'متوسط السلوكيات الإيجابية والسلبية'
+                        }
+                    }
+                }
+            });
+        }
+
+        // إنشاء رسم بياني للمقارنة
+        function createComparisonChart() {
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            
+            // حساب المتوسطات للسلوكيات الإيجابية قبل وبعد
+            let interactionBefore = 0;
+            let participationBefore = 0;
+            let hardWorkBefore = 0;
+            let interactionAfter = 0;
+            let participationAfter = 0;
+            let hardWorkAfter = 0;
+            
+            studentsData.forEach(student => {
+                interactionBefore += student.before.interaction;
+                participationBefore += student.before.participation;
+                hardWorkBefore += student.before.hardWork;
+                interactionAfter += student.after.interaction;
+                participationAfter += student.after.participation;
+                hardWorkAfter += student.after.hardWork;
+            });
+            
+            const avgInteractionBefore = Math.round(interactionBefore / studentsData.length);
+            const avgParticipationBefore = Math.round(participationBefore / studentsData.length);
+            const avgHardWorkBefore = Math.round(hardWorkBefore / studentsData.length);
+            const avgInteractionAfter = Math.round(interactionAfter / studentsData.length);
+            const avgParticipationAfter = Math.round(participationAfter / studentsData.length);
+            const avgHardWorkAfter = Math.round(hardWorkAfter / studentsData.length);
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['التفاعل الصفي', 'المشاركة الفاعلة', 'العمل بجد'],
+                    datasets: [
+                        {
+                            label: 'قبل المبادرة',
+                            data: [avgInteractionBefore, avgParticipationBefore, avgHardWorkBefore],
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'بعد المبادرة',
+                            data: [avgInteractionAfter, avgParticipationAfter, avgHardWorkAfter],
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 15
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'مقارنة السلوكيات الإيجابية قبل وبعد المبادرة'
+                        }
+                    }
+                }
+            });
+        }
+
+        // تحديث أفضل الطلاب متحسنين
+        function updateTopImprovers() {
+            const topImproversTable = document.getElementById('top-improvers-table');
+            topImproversTable.innerHTML = '';
+            
+            // حساب التحسن لكل طالب
+            const studentsWithImprovement = studentsData.map((student, index) => {
+                const totalBefore = student.before.interaction + student.before.participation + student.before.hardWork;
+                const totalAfter = student.after.interaction + student.after.participation + student.after.hardWork;
+                const improvement = ((totalAfter - totalBefore) / totalBefore) * 100;
+                
+                return {
+                    index: index,
+                    name: student.name,
+                    improvement: improvement,
+                    interactionImprovement: student.after.interaction - student.before.interaction,
+                    participationImprovement: student.after.participation - student.before.participation,
+                    hardWorkImprovement: student.after.hardWork - student.before.hardWork
+                };
+            });
+            
+            // ترتيب الطلاب حسب التحسن
+            studentsWithImprovement.sort((a, b) => b.improvement - a.improvement);
+            
+            // عرض أفضل 5 طلاب
+            const top5 = studentsWithImprovement.slice(0, 5);
+            
+            top5.forEach((student, rank) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${rank + 1}</td>
+                    <td>${student.name}</td>
+                    <td class="improvement">+${Math.round(student.improvement)}%</td>
+                    <td>+${student.interactionImprovement}</td>
+                    <td>+${student.participationImprovement}</td>
+                    <td>+${student.hardWorkImprovement}</td>
+                `;
+                topImproversTable.appendChild(row);
+            });
+        }
 
         // نظام الخطط العلاجية
         function initializeTreatmentPlansSystem() {
+            // ملء قائمة الطلاب في نموذج الخطة الفردية
+            const studentSelect = document.getElementById('student-name');
+            studentsData.forEach((student, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = student.name;
+                studentSelect.appendChild(option);
+            });
+            
+            // ملء قائمة المواد في النماذج
+            const subjectSelect = document.getElementById('subject');
+            const groupSubjectSelect = document.getElementById('group-subject');
+            
+            teachersData.forEach(teacher => {
+                const option1 = document.createElement('option');
+                option1.value = teacher.subject;
+                option1.textContent = `${teacher.subject} - ${teacher.name}`;
+                subjectSelect.appendChild(option1);
+                
+                const option2 = document.createElement('option');
+                option2.value = teacher.subject;
+                option2.textContent = teacher.subject;
+                groupSubjectSelect.appendChild(option2);
+            });
+            
             // اختيار نوع الخطة
             document.getElementById('individual-plan-card').addEventListener('click', function() {
                 selectPlanType('individual');
@@ -921,6 +1472,10 @@
             // تحديث اسم المعلم عند تغيير المادة
             document.getElementById('subject').addEventListener('change', function() {
                 updateTeacherName();
+            });
+            
+            document.getElementById('group-subject').addEventListener('change', function() {
+                updateGroupTeacherName();
             });
             
             // تهيئة متابعة الأسابيع
@@ -939,6 +1494,33 @@
             
             // تحديث جدول الخطط العلاجية
             updateTreatmentPlansTable();
+        }
+
+        // نظام التنقل بين الصفحات
+        function initializeNavigation() {
+            document.querySelectorAll('.nav-link[data-page]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    showPage(pageId);
+                    
+                    // تحديث حالة التنقل النشط
+                    document.querySelectorAll('.nav-link').forEach(navLink => {
+                        navLink.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        function showPage(pageId) {
+            // إخفاء جميع الصفحات
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // إظهار الصفحة المطلوبة
+            document.getElementById(pageId).classList.add('active');
         }
 
         function selectPlanType(type) {
@@ -962,16 +1544,14 @@
 
         function updateTeacherName() {
             const subject = document.getElementById('subject').value;
-            const teachers = {
-                'chemistry': 'عبدالله محمد حمدي',
-                'math': 'عبدالعزيز عايض القحطاني',
-                'biology': 'عبدالرحمن عبدالله الغامدي',
-                'english': 'فهد ابراهيم المحبوب',
-                'language': 'محمد أحمد العميري',
-                'technology': 'فارس سعيد الغامدي'
-            };
-            
-            document.getElementById('teacher-name').value = teachers[subject] || '';
+            const teacher = teachersData.find(t => t.subject === subject);
+            document.getElementById('teacher-name').value = teacher ? teacher.name : '';
+        }
+
+        function updateGroupTeacherName() {
+            const subject = document.getElementById('group-subject').value;
+            const teacher = teachersData.find(t => t.subject === subject);
+            document.getElementById('group-teacher').value = teacher ? teacher.name : '';
         }
 
         function initializeWeekTracker() {
@@ -998,7 +1578,7 @@
             const studentsList = document.getElementById('group-students-list');
             studentsList.innerHTML = '';
             
-            students.forEach((student, index) => {
+            studentsData.forEach((student, index) => {
                 const studentItem = document.createElement('div');
                 studentItem.className = 'form-check';
                 studentItem.innerHTML = `
@@ -1058,7 +1638,7 @@
             
             // التحقق من اختيار الطلاب
             const selectedStudents = [];
-            students.forEach((student, index) => {
+            studentsData.forEach((student, index) => {
                 const checkbox = document.getElementById(`group-student-${index}`);
                 if (checkbox && checkbox.checked) {
                     selectedStudents.push(student.name);
@@ -1089,7 +1669,7 @@
             document.getElementById('group-notes').value = '';
             
             // إلغاء تحديد جميع الطلاب
-            students.forEach((student, index) => {
+            studentsData.forEach((student, index) => {
                 const checkbox = document.getElementById(`group-student-${index}`);
                 if (checkbox) {
                     checkbox.checked = false;
@@ -1107,7 +1687,7 @@
             tableBody.innerHTML = '';
             
             treatmentPlans.forEach(plan => {
-                const student = plan.studentId !== null ? students[plan.studentId] : { name: "مجموعة طلاب" };
+                const student = plan.studentId !== null ? studentsData[plan.studentId] : { name: "مجموعة طلاب" };
                 
                 let progressClass = "";
                 if (plan.progress >= 80) {
@@ -1167,7 +1747,7 @@
         function viewPlanDetails(planId) {
             const plan = treatmentPlans.find(p => p.id == planId);
             if (plan) {
-                alert(`عرض تفاصيل الخطة العلاجية #${planId}\n\nالطالب: ${plan.studentId !== null ? students[plan.studentId].name : "مجموعة طلاب"}\nنوع الخطة: ${plan.type}\nالمادة: ${plan.subject}\nالحالة: ${plan.status}\nمستوى التقدم: ${plan.progress}%`);
+                alert(`عرض تفاصيل الخطة العلاجية #${planId}\n\nالطالب: ${plan.studentId !== null ? studentsData[plan.studentId].name : "مجموعة طلاب"}\nنوع الخطة: ${plan.type}\nالمادة: ${plan.subject}\nالحالة: ${plan.status}\nمستوى التقدم: ${plan.progress}%`);
             }
         }
 
@@ -1189,7 +1769,18 @@
             // هنا يمكنك إضافة كود لطباعة النموذج
         }
 
-        // ... باقي الدوال والتهيئات ...
+        // إضافة مستمعي الأحداث لأزرار التقارير
+        document.getElementById('generate-excellence-report').addEventListener('click', function() {
+            alert('جاري إنشاء تقرير الطلاب المتميزين وإرساله عبر ClassDojo...');
+        });
+        
+        document.getElementById('generate-struggling-report').addEventListener('click', function() {
+            alert('جاري إنشاء تقرير الطلاب المتعثرين وإرساله عبر ClassDojo...');
+        });
+        
+        document.getElementById('generate-comprehensive-report').addEventListener('click', function() {
+            alert('جاري إنشاء التقرير الشامل عن مبادرة هُمام...');
+        });
     </script>
 </body>
 </html>
