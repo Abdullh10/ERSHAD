@@ -8,6 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <style>
         :root {
             --primary-color: #1a5276;
@@ -987,7 +989,7 @@
                         </div>
                         
                         <button class="btn btn-primary" id="save-individual-plan">حفظ الخطة الفردية</button>
-                        <button class="btn btn-outline-secondary me-2" id="print-individual-plan">طباعة النموذج</button>
+                        <button class="btn btn-outline-secondary me-2" id="export-individual-plan">تصدير PDF</button>
                     </div>
 
                     <!-- نموذج الخطة الجماعية -->
@@ -1103,7 +1105,7 @@
                         </div>
                         
                         <button class="btn btn-primary" id="save-group-plan">حفظ الخطة الجماعية</button>
-                        <button class="btn btn-outline-secondary me-2" id="print-group-plan">طباعة النموذج</button>
+                        <button class="btn btn-outline-secondary me-2" id="export-group-plan">تصدير PDF</button>
                     </div>
                 </div>
             </div>
@@ -1521,9 +1523,9 @@
             document.getElementById('save-individual-plan').addEventListener('click', saveIndividualPlan);
             document.getElementById('save-group-plan').addEventListener('click', saveGroupPlan);
             
-            // طباعة النماذج
-            document.getElementById('print-individual-plan').addEventListener('click', printIndividualPlan);
-            document.getElementById('print-group-plan').addEventListener('click', printGroupPlan);
+            // تصدير النماذج إلى PDF
+            document.getElementById('export-individual-plan').addEventListener('click', exportIndividualPlanToPDF);
+            document.getElementById('export-group-plan').addEventListener('click', exportGroupPlanToPDF);
             
             // تحديث قائمة الطلاب للخطة الجماعية
             updateGroupStudentsList();
@@ -2197,14 +2199,104 @@
             }
         }
 
-        function printIndividualPlan() {
-            showNotification('جاري تحضير نموذج الخطة الفردية للطباعة...', 'info');
-            // هنا يمكنك إضافة كود لطباعة النموذج
+        // تصدير الخطة الفردية إلى PDF
+        function exportIndividualPlanToPDF() {
+            showNotification('جاري تصدير الخطة الفردية إلى PDF...', 'info');
+            
+            // هنا يمكنك إضافة كود لتصدير الخطة الفردية إلى PDF باستخدام jsPDF
+            // مثال مبسط:
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(16);
+                doc.text('الخطة العلاجية الفردية - نظام هُمام', 105, 15, { align: 'center' });
+                
+                doc.setFontSize(12);
+                doc.text(`اسم الطالب: ${document.getElementById('student-name').value}`, 20, 30);
+                doc.text(`المادة: ${document.getElementById('subject').value}`, 20, 40);
+                doc.text(`المعلم المسؤول: ${document.getElementById('teacher-name').value}`, 20, 50);
+                
+                doc.text('الخطوات المقترحة للعلاج:', 20, 70);
+                doc.text(document.getElementById('treatment-steps').value, 20, 80, { maxWidth: 170 });
+                
+                doc.text('مؤشرات التقدم:', 20, 120);
+                doc.text(document.getElementById('progress-indicators').value, 20, 130, { maxWidth: 170 });
+                
+                doc.text(`توقيع ولي الأمر: ${document.getElementById('parent-signature').value}`, 20, 180);
+                doc.text('توقيع المرشد الطلابي: منصور موسى حامطي', 20, 190);
+                
+                doc.save('الخطة_العلاجية_الفردية.pdf');
+                
+                showNotification('تم تصدير الخطة الفردية إلى PDF بنجاح', 'success');
+            } catch (error) {
+                console.error('خطأ في تصدير PDF:', error);
+                showNotification('حدث خطأ أثناء تصدير PDF', 'error');
+            }
         }
 
-        function printGroupPlan() {
-            showNotification('جاري تحضير نموذج الخطة الجماعية للطباعة...', 'info');
-            // هنا يمكنك إضافة كود لطباعة النموذج
+        // تصدير الخطة الجماعية إلى PDF
+        function exportGroupPlanToPDF() {
+            showNotification('جاري تصدير الخطة الجماعية إلى PDF...', 'info');
+            
+            // هنا يمكنك إضافة كود لتصدير الخطة الجماعية إلى PDF باستخدام jsPDF
+            // مثال مبسط:
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(16);
+                doc.text('الخطة العلاجية الجماعية - نظام هُمام', 105, 15, { align: 'center' });
+                
+                doc.setFontSize(12);
+                doc.text(`المادة: ${document.getElementById('group-subject').value}`, 20, 30);
+                doc.text(`الصف: ${document.getElementById('group-class').value}`, 20, 40);
+                doc.text(`المعلم المسؤول: ${document.getElementById('group-teacher').value}`, 20, 50);
+                
+                // جمع الطلاب المختارين
+                const selectedStudents = [];
+                studentsData.forEach((student, index) => {
+                    const checkbox = document.getElementById(`group-student-${index}`);
+                    if (checkbox && checkbox.checked) {
+                        selectedStudents.push(student.name);
+                    }
+                });
+                
+                doc.text('الطلاب المستهدفون:', 20, 70);
+                let yPosition = 80;
+                selectedStudents.forEach(student => {
+                    doc.text(`- ${student}`, 25, yPosition);
+                    yPosition += 7;
+                });
+                
+                doc.text('الاستراتيجيات التعليمية المقترحة:', 20, yPosition + 10);
+                yPosition += 20;
+                
+                // جمع الاستراتيجيات المختارة
+                const strategies = [
+                    { name: 'التعلم التعاوني', id: 'strategy1' },
+                    { name: 'التعلم النشط', id: 'strategy2' },
+                    { name: 'التفريد في التعليم', id: 'strategy3' },
+                    { name: 'التعلم القائم على المشاريع', id: 'strategy4' }
+                ];
+                
+                strategies.forEach(strategy => {
+                    const checkbox = document.getElementById(strategy.id);
+                    if (checkbox && checkbox.checked) {
+                        doc.text(`- ${strategy.name}`, 25, yPosition);
+                        yPosition += 7;
+                    }
+                });
+                
+                doc.save('الخطة_العلاجية_الجماعية.pdf');
+                
+                showNotification('تم تصدير الخطة الجماعية إلى PDF بنجاح', 'success');
+            } catch (error) {
+                console.error('خطأ في تصدير PDF:', error);
+                showNotification('حدث خطأ أثناء تصدير PDF', 'error');
+            }
         }
 
         // تصدير إلى Excel
@@ -2216,7 +2308,48 @@
         // تصدير إلى PDF
         function exportToPDF() {
             showNotification('جاري تصدير البيانات إلى PDF...', 'info');
-            // هنا يمكنك إضافة كود لتصدير البيانات إلى PDF
+            
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(16);
+                doc.text('تقرير الطلاب - نظام هُمام', 105, 15, { align: 'center' });
+                
+                doc.setFontSize(12);
+                let yPosition = 30;
+                
+                // إضافة جدول الطلاب
+                const tableData = [];
+                studentsData.forEach(student => {
+                    const totalBefore = student.before.interaction + student.before.participation + student.before.hardWork;
+                    const totalAfter = student.after.interaction + student.after.participation + student.after.hardWork;
+                    const improvement = totalBefore > 0 ? ((totalAfter - totalBefore) / totalBefore) * 100 : 0;
+                    
+                    tableData.push([
+                        student.name,
+                        totalBefore,
+                        totalAfter,
+                        `${Math.round(improvement)}%`
+                    ]);
+                });
+                
+                doc.autoTable({
+                    startY: yPosition,
+                    head: [['اسم الطالب', 'النقاط قبل', 'النقاط بعد', 'التحسن']],
+                    body: tableData,
+                    styles: { font: 'helvetica', fontSize: 10 },
+                    headStyles: { fillColor: [26, 82, 118] }
+                });
+                
+                doc.save('تقرير_الطلاب.pdf');
+                
+                showNotification('تم تصدير البيانات إلى PDF بنجاح', 'success');
+            } catch (error) {
+                console.error('خطأ في تصدير PDF:', error);
+                showNotification('حدث خطأ أثناء تصدير PDF', 'error');
+            }
         }
 
         // إظهار الإشعارات
